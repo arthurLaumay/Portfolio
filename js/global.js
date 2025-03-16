@@ -1,5 +1,4 @@
-/* ceci est un commentaire js */
-// console.log('toto');
+
 
 // string 
 
@@ -8,41 +7,27 @@ myVar = "variable changée";
 
 const myVar2 = "ma variable 2";
 
-// console.log(myVar);
 
 // boolean
 let isTrue = true;
 let isFalse = false;
 
-// console.log(isFalse);
 
 // chiffres et opérateurs
 
 let chiffre1 = 4;
 let chiffre2 = 3;
 
-// console.log(typeof chiffre1, typeof chiffre2);
 
 // template string, littéraux de gabarits et concat
 
 let test = 'test ' + myVar + 'value';
 let test2 = `test ${myVar} dzqdqzd `;
 
-// console.log(test2);
-/*
-if (chiffre1 <= 3) {
-  console.log('condition est valide');
-} else if (chiffre1 <= 4) {
-  console.log('je passe la');
-} else {
-  console.log('condition pas valide')
-}
-*/
 
 // tableaux 
 
 let array = ['item 1', 'item 2', 'item 3', 'item 4'];
-// console.log(array[3]);
 
 // objets
 
@@ -51,25 +36,8 @@ let obj = {
   description: 'Ma description'
 }
 
-// console.log(obj.title, obj.description);
-
-// les boucles, while, for, foreach
-/*
-for (let i = 0; i < array.length; i++) {
-  console.log(array[i]);
-}
-
-array.forEach(item => {
-  console.log(item);
-})
-
-*/
 
 // fonctions 
-
-/*function myFunction(item, item2) {
-  console.log(item, item2);
-}*/
 
 const myFunction = (item, item2) => {
   // console.log(item, item2);
@@ -84,33 +52,6 @@ const calcul = (nb1, nb2) => {
 
 let result = calcul(4, 5);
 // console.log(result);
-
-// interagir avec le dom // methode, propriete, evement
-
-// selectors
-// let header = document.querySelector('.header');
-// console.log(header);
-
-// let grids = document.querySelectorAll('.grid');
-/*
-grids.forEach(grid => {
-  grid.classList.add('titi');
-  console.log(grid)
-});
-*/
-// evenements les plus courants
-/*
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM entièrement chargé et analysé");
-});
-
-header.addEventListener('click', (e) => {
-  console.log(e);
-});
-
-header.addEventListener('mouseenter', (e) => {
-  console.log('souris entre');
-});*/
 
 // insertion dom et navigation dans le dom
 
@@ -200,13 +141,14 @@ function showProjectDetails() {
     modals.forEach(modal => {
       modal.classList.remove('show');
     });
+    document.body.classList.remove('no-scroll'); // Réactive le scroll
   }
 
   links.forEach(elem => {
     elem.addEventListener('click', (event) => {
       event.preventDefault();
-
       document.querySelector(`[id=${elem.dataset.id}]`).classList.add('show');
+      document.body.classList.add('no-scroll'); // Désactive le scroll
     });
   });
 
@@ -219,6 +161,7 @@ function showProjectDetails() {
 }
 
 showProjectDetails();
+
 
 // effets
 
@@ -268,3 +211,36 @@ const observerIntersectionAnimation = () => {
 observerIntersectionAnimation();
 
 
+$(document).ready(function () {
+  // Sélectionne tous les liens du menu
+  let sections = $('section'); // Toutes les sections avec un id
+  let navLinks = $('.navbar a'); // Tous les liens du menu
+
+  $(window).on('scroll', function () {
+    let currentScroll = $(this).scrollTop();
+
+    sections.each(function () {
+      let top = $(this).offset().top - 100; // Ajuste selon la hauteur du header
+      let bottom = top + $(this).outerHeight();
+
+      if (currentScroll >= top && currentScroll < bottom) {
+        let id = $(this).attr('id');
+        navLinks.removeClass('active'); // Supprime la classe active
+        $(".navbar a[href='#" + id + "']").addClass('active'); // Ajoute la classe active au lien correspondant
+      }
+    });
+  });
+
+  // Ajoute un effet de défilement fluide pour les liens du menu
+  $(".navbar a").on("click", function (event) {
+    event.preventDefault();
+    let target = $(this).attr("href");
+
+    $("html, body").animate(
+      {
+        scrollTop: $(target).offset().top - 80, // Ajuste selon la hauteur du header
+      },
+      800 // Durée de l'animation
+    );
+  });
+});

@@ -831,3 +831,21 @@ footer .socials a:hover {
 .text-contact{
   text-align: center;
 }
+
+.navbar ul li{
+  margin: 0;
+}
+
+.navbar a.active {
+  color: #ff6600; /* Changer la couleur du lien actif */
+  font-weight: bold;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.description-savoirfaire{
+  text-align: center;
+}
